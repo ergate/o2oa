@@ -22,10 +22,10 @@ import com.x.base.core.project.tools.DefaultCharset;
 
 public class Collect extends ConfigObject {
 
-	private static String Default_title = "企业办公平台";
-	private static String Default_footer = "www.o2oa.net";
-	private static String Default_name = "www.o2oa.net";
-	private static String Default_appUrl = "https://app.o2oa.net/download/download.html";
+	private static String Default_title = "南开大学非学历教育管理系统";
+	private static String Default_footer = "fxl.nankai.edu.cn";
+	private static String Default_name = "fxl.nankai.edu.cn";
+	private static String Default_appUrl = "https://";
 	static String Default_server = "collect.o2oa.net";
 	static String Default_appPackServerHost = "apppack.o2oa.net";
 	private static Integer Default_port = 20080;

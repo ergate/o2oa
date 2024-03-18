@@ -498,4 +498,65 @@ public class FileInfoAction extends StandardJaxrsAction {
 		asyncResponse.resume(ResponseFactory.getEntityTagActionResultResponse(request, result));
 	}
 
+	@JaxrsMethodDescribe( value = "根据合同模板生成合同文件", action = ActionTemplate.class )
+	@POST
+	@Path("{id}/template/{templateFlag}/filemaker")
+	@Produces(HttpMediaType.APPLICATION_JSON_UTF_8)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void fileMaker(@Suspended final AsyncResponse asyncResponse, @Context HttpServletRequest request,
+						@JaxrsParameterDescribe("文档ID") @PathParam("id") String id,
+						@JaxrsParameterDescribe("模板标识") @PathParam("templateFlag") String templateFlag,
+						@JaxrsParameterDescribe("需要替换的信息") JsonElement jsonElement ) {
+		ActionResult<ActionTemplate.Wo> result = new ActionResult<>();
+		EffectivePerson effectivePerson = this.effectivePerson(request);
+
+		try {
+			result = new ActionTemplate().execute( request, effectivePerson, id, templateFlag, jsonElement );
+		} catch (Exception e) {
+			logger.error(e, effectivePerson, request, null);
+			result.error(e);
+		}
+		asyncResponse.resume(ResponseFactory.getEntityTagActionResultResponse(request, result));
+	}
+
+	@JaxrsMethodDescribe( value = "根据通用表格模板生成表格文件", action = ActionTable.class )
+	@POST
+	@Path("{id}/template/{templateFlag}/tablemaker")
+	@Produces(HttpMediaType.APPLICATION_JSON_UTF_8)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void tableMaker(@Suspended final AsyncResponse asyncResponse, @Context HttpServletRequest request,
+						@JaxrsParameterDescribe("文档ID") @PathParam("id") String id,
+						@JaxrsParameterDescribe("模板标识") @PathParam("templateFlag") String templateFlag,
+						@JaxrsParameterDescribe("需要替换的信息") JsonElement jsonElement ) {
+		ActionResult<ActionTable.Wo> result = new ActionResult<>();
+		EffectivePerson effectivePerson = this.effectivePerson(request);
+
+		try {
+			result = new ActionTable().execute( request, effectivePerson, id, templateFlag, jsonElement );
+		} catch (Exception e) {
+			logger.error(e, effectivePerson, request, null);
+			result.error(e);
+		}
+		asyncResponse.resume(ResponseFactory.getEntityTagActionResultResponse(request, result));
+	}
+
+	@JaxrsMethodDescribe( value = "根据模板生成证书", action = ActionCertificate.class )
+	@POST
+	@Path("template/{templateFlag}/certificatemaker")
+	@Produces(HttpMediaType.APPLICATION_JSON_UTF_8)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void certificateMaker(@Suspended final AsyncResponse asyncResponse, @Context HttpServletRequest request,
+						@JaxrsParameterDescribe("模板标识") @PathParam("templateFlag") String templateFlag,
+						@JaxrsParameterDescribe("需要替换的信息") JsonElement jsonElement ) {
+		ActionResult<ActionCertificate.Wo> result = new ActionResult<>();
+		EffectivePerson effectivePerson = this.effectivePerson(request);
+
+		try {
+			result = new ActionCertificate().execute( request, effectivePerson, templateFlag, jsonElement );
+		} catch (Exception e) {
+			logger.error(e, effectivePerson, request, null);
+			result.error(e);
+		}
+		asyncResponse.resume(ResponseFactory.getEntityTagActionResultResponse(request, result));
+	}
 }

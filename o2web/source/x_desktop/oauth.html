@@ -28,11 +28,17 @@
                 var redirect = uri.getData("redirect");
                 var code = uri.getData("code");
                 var method = uri.getData("method");
+                var state = uri.getData("state");
 
                 var _load = function(){
                     if (code) {
-                        layout.loginOauth();
-                    } else if (oauth) {
+                        if(state){
+                            window.location.href ="https://fxloauth.nankai.edu.cn/sso/code?code="+code+"&state="+state;
+                        }else {
+                            layout.loginOauth();
+                        }
+
+                    }  else if (oauth) {
                         layout.loadOauth();
                     }
                 };
@@ -61,7 +67,7 @@
                             }
                         }.bind(this));
                     } else {
-
+                        if(method) r = r + "&method=" + method;
                         var logMethod = method || "loginOauthServer";
                         action[logMethod](oauth, code, encodeURIComponent(r), function () {
                             if (method === "oauthBind") {

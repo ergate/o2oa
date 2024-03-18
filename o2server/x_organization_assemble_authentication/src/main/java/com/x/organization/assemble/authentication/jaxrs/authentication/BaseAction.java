@@ -373,6 +373,11 @@ abstract class BaseAction extends StandardJaxrsAction {
 		} else {
 			address = address + "?" + parameter;
 		}
+
+		// Authorization: Bearer <token>
+		List<NameValuePair> heads = new ArrayList<NameValuePair>();
+		heads.add(new NameValuePair("Authorization", "Bearer " + param.get("access_token")));
+
 		return HttpConnection.getAsString(address, null);
 	}
 

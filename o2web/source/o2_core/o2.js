@@ -2158,7 +2158,7 @@ if (!window.o2) {
                                 reject({"xhr": xhr, "text": "", "error": "error"});
                             }
                         }.bind(this),
-                        onError: function (text, error) {
+                        onError: function (xhr, text, error) {
                             _resGetQueue[_addr] = null;
                             delete _resGetQueue[_addr];
                             if (!loadAsync){
