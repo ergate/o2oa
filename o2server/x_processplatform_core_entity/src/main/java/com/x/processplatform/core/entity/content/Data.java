@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import org.apache.commons.beanutils.PropertyUtils;
@@ -74,7 +75,7 @@ public class Data extends ListOrderedMap<String, Object> {
 	@JsonIgnore
 	public Data setAttachmentList(List<Attachment> attachmentList) {
 		List<DataAttachment> list = new ArrayList<>();
-		if (ListTools.isEmpty(attachmentList)) {
+		if (!ListTools.isEmpty(attachmentList)) {
 			DataAttachment.copier.copy(attachmentList, list);
 		}
 		this.put(ATTACHMENTLIST_PROPERTY, list);
@@ -489,6 +490,12 @@ public class Data extends ListOrderedMap<String, Object> {
 		return this.keyList().stream().filter(
 				o -> (!StringUtils.equals(WORK_PROPERTY, o)) && (!StringUtils.equals(ATTACHMENTLIST_PROPERTY, o)))
 				.count() == 0;
+	}
+
+	@SuppressWarnings("unchecked")
+	public void replaceContent(String json) {
+		this.clear();
+		this.putAll(XGsonBuilder.instance().fromJson(json, Map.class));
 	}
 
 	@Override
