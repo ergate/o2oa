@@ -118,8 +118,12 @@ public class ActionCertificate extends BaseAction {
 
 			CommonArg commonArg = new CommonArg();
 			commonArg.setProject_name(wi.getProject_name());
-			commonArg.setSigning(wi.getSigning());
+			commonArg.setCheckinfo(wi.getCheckinfo());
 			commonArg.setDate(wi.getSigning_time());
+			commonArg.setOpeningTime(wi.getOpeningTime());
+			commonArg.setEndingTime(wi.getEndingTime());
+			commonArg.setCreatorUnitName(wi.getCreatorUnitName());
+			commonArg.setActualHours(wi.getActualHours());
 			// 根据证书文档ID获取当前附件列表
 			FileInfoFactory fileInfoFactory = business.getFileInfoFactory();
 			List<String> ids = fileInfoFactory.listAttachmentByDocument(wi.getStudentDocumentID());// 获取指定文档的所有附件列表
@@ -347,8 +351,12 @@ public class ActionCertificate extends BaseAction {
 		datas.put("rate", certificateArg.getRate());
 		datas.put("certificate_id", certificateArg.getCertificate_id());
 		datas.put("date", commonArg.getDate());
-		datas.put("signing", commonArg.getSigning());
+		datas.put("checkinfo", commonArg.getCheckinfo());
 		datas.put("project_name", commonArg.getProject_name());
+		datas.put("actualHours", commonArg.getActualHours());
+		datas.put("creatorUnitName", commonArg.getCreatorUnitName());
+		datas.put("endingTime", commonArg.getEndingTime());
+		datas.put("openingTime", commonArg.getOpeningTime());
 
 		XWPFTemplate.compile(templatePath)
 				.render(datas)
@@ -397,8 +405,20 @@ public class ActionCertificate extends BaseAction {
 		@FieldDescribe("发证日期")
 		private String signing_time;
 
-		@FieldDescribe("签发人")
-		private String signing;
+		@FieldDescribe("查验")
+		private String checkinfo;
+
+		@FieldDescribe("开班时间")
+		private String openingTime;
+
+		@FieldDescribe("结业时间")
+		private String endingTime;
+
+		@FieldDescribe("办学单位")
+		private String creatorUnitName;
+
+		@FieldDescribe("学时")
+		private String actualHours;
 
 		@FieldDescribe("学员信息文件ID")
 		private String studentDocumentID;
@@ -446,12 +466,44 @@ public class ActionCertificate extends BaseAction {
 			this.signing_time = signing_time;
 		}
 
-		public String getSigning() {
-			return signing;
+		public String getCheckinfo() {
+			return checkinfo;
 		}
 
-		public void setSigning(String signing) {
-			this.signing = signing;
+		public void setCheckinfo(String checkinfo) {
+			this.checkinfo = checkinfo;
+		}
+
+		public String getOpeningTime() {
+			return openingTime;
+		}
+
+		public void setOpeningTime(String openingTime) {
+			this.openingTime = openingTime;
+		}
+
+		public String getEndingTime() {
+			return endingTime;
+		}
+
+		public void setEndingTime(String endingTime) {
+			this.endingTime = endingTime;
+		}
+
+		public String getCreatorUnitName() {
+			return creatorUnitName;
+		}
+
+		public void setCreatorUnitName(String creatorUnitName) {
+			this.creatorUnitName = creatorUnitName;
+		}
+
+		public String getActualHours() {
+			return actualHours;
+		}
+
+		public void setActualHours(String actualHours) {
+			this.actualHours = actualHours;
 		}
 
 		public String getStudentDocumentID() {
@@ -664,8 +716,20 @@ public class ActionCertificate extends BaseAction {
 		@FieldDescribe("发证日期")
 		private String date;
 
-		@FieldDescribe("签发人")
-		private String signing;
+		@FieldDescribe("查验")
+		private String checkinfo;
+
+		@FieldDescribe("开班时间")
+		private String openingTime;
+
+		@FieldDescribe("结业时间")
+		private String endingTime;
+
+		@FieldDescribe("办学单位")
+		private String creatorUnitName;
+
+		@FieldDescribe("学时")
+		private String actualHours;
 
 		public String getProject_name() {
 			return project_name;
@@ -683,13 +747,47 @@ public class ActionCertificate extends BaseAction {
 			this.date = date;
 		}
 
-		public String getSigning() {
-			return signing;
+		public String getCheckinfo() {
+			return checkinfo;
 		}
 
-		public void setSigning(String signing) {
-			this.signing = signing;
+		public void setCheckinfo(String checkinfo) {
+			this.checkinfo = checkinfo;
 		}
+
+		public String getOpeningTime() {
+			return openingTime;
+		}
+
+		public void setOpeningTime(String openingTime) {
+			this.openingTime = openingTime;
+		}
+
+		public String getEndingTime() {
+			return endingTime;
+		}
+
+		public void setEndingTime(String endingTime) {
+			this.endingTime = endingTime;
+		}
+
+		public String getCreatorUnitName() {
+			return creatorUnitName;
+		}
+
+		public void setCreatorUnitName(String creatorUnitName) {
+			this.creatorUnitName = creatorUnitName;
+		}
+
+		public String getActualHours() {
+			return actualHours;
+		}
+
+		public void setActualHours(String actualHours) {
+			this.actualHours = actualHours;
+		}
+
+
 	}
 
 }
