@@ -553,14 +553,14 @@ MWF.xApplication.cms.Index.Newer = new Class({
                 "readonly" :false,
                 "documentId": id,
                 "appId": appId,
-                "onPostPublish" : function( args ){
-                    this.fireEvent( "postPublish", args );
-                }.bind(this),
-                "onAfterPublish" : function ( args ) {
-                    debugger;
-                    if(_self.view && _self.view.reload )_self.view.reload();
-                    _self.fireEvent( "afterPublish", args );
-                }
+                // "onPostPublish" : function( args ){
+                //     this.fireEvent( "postPublish", args );
+                // }.bind(this),
+                // "onAfterPublish" : function ( args ) {
+                //     debugger;
+                //     if(_self.view && _self.view.reload )_self.view.reload();
+                //     _self.fireEvent( "afterPublish", args );
+                // }
             };
             if( typeOf(this.options.autoSave) == "boolean" )options.autoSave = this.options.autoSave;
             if( typeOf(this.options.saveOnClose) == "boolean" )options.saveOnClose = this.options.saveOnClose;

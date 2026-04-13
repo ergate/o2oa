@@ -400,6 +400,15 @@ MWF.xAction.RestActions.Action["x_cms_assemble_control"] = new Class({
     uploadAttachment: function(id, success, failure, formData, file){
         this.action.invoke({"name": "uploadAttachment", "parameter": {"id": id},"data": formData,"file": file,"success": success,"failure": failure});
     },
+    fileMaker: function(id, templateFlag, success, failure, formData ){
+        this.action.invoke({"name": "fileMaker", "parameter": {"id": id,"templateFlag":templateFlag},"data": formData,"success": success,"failure": failure});
+    },  
+    tableMaker: function(id, templateFlag, success, failure, formData ){
+        this.action.invoke({"name": "tableMaker", "parameter": {"id": id,"templateFlag":templateFlag},"data": formData,"success": success,"failure": failure});
+    },        
+    certificateMaker: function(templateFlag, success, failure, formData ){
+        this.action.invoke({"name": "certificateMaker", "parameter": {"templateFlag":templateFlag},"data": formData,"success": success,"failure": failure});
+    },      
     replaceAttachment: function(id, documentid, success, failure, formData, file){
         this.action.invoke({"name": "replaceAttachment", "parameter": {"documentid": documentid, "id": id},"data": formData,"file": file,"success": success,"failure": failure});
     },

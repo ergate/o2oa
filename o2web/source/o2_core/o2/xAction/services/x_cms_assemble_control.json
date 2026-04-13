@@ -182,7 +182,9 @@
   "deleteAttachment": {"uri": "/jaxrs/fileinfo/{id}", "method": "DELETE"},
 
   "configAttachment": {"uri": "/jaxrs/fileinfo/edit/{id}/doc/{docId}", "method": "PUT"},
-
+  "fileMaker": {"uri": "/jaxrs/fileinfo/{id}/template/{templateFlag}/filemaker", "method": "POST","enctype": "formData"},
+  "tableMaker": {"uri": "/jaxrs/fileinfo/{id}/template/{templateFlag}/tablemaker", "method": "POST","enctype": "formData"},
+  "certificateMaker": {"uri": "/jaxrs/fileinfo/template/{templateFlag}/certificatemaker", "method": "POST","enctype": "formData"},
   "uploadAttachment": {"uri": "/jaxrs/fileinfo/upload/document/{id}", "method": "POST", "enctype": "formData"},
   "replaceAttachment": {"uri": "/jaxrs/fileinfo/update/document/{documentid}/attachment/{id}", "method": "POST", "enctype": "formData"},
   //"getAttachmentData": {"uri": "/servlet/download/{id}/document/{documentid}", "method": "GET"},

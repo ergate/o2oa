@@ -58,6 +58,8 @@ import com.x.organization.core.entity.Identity;
 import com.x.organization.core.entity.Person;
 import com.x.organization.core.entity.Person_;
 
+import net.fortuna.ical4j.model.property.Name;
+
 abstract class BaseAction extends StandardJaxrsAction {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(BaseAction.class);
@@ -349,6 +351,11 @@ abstract class BaseAction extends StandardJaxrsAction {
 		} else {
 			address = address + "?" + parameter;
 		}
+
+		// Authorization: Bearer <token>
+		List<NameValuePair> heads = new ArrayList<NameValuePair>();
+		heads.add(new NameValuePair("Authorization", "Bearer " + param.get("access_token")));
+
 		return HttpConnection.getAsString(address, null);
 	}
 

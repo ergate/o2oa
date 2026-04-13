@@ -229,9 +229,9 @@ MWF.xApplication.cms.Index.Creater.Category = new Class({
                 //"onStarted": function(data, title, categoryName){
                 //    this.afterStart(data, title, categoryName);
                 //}.bind(this)
-                onPostPublish : function(){
-                    if(this.creater.view )this.creater.view.reload();
-                }.bind(this)
+                // onPostPublish : function(){
+                //     if(this.creater.view )this.creater.view.reload();
+                // }.bind(this)
             });
             starter.load();
         }.bind(this));

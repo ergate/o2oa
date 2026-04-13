@@ -2232,15 +2232,15 @@ if (!MWF.xScript || !MWF.xScript.PageEnvironment) {
 
                         "categoryFlag": category, //category id or name
                         "columnFlag": column, //column id or name,
-                        "onStarted": function (documentId, data, windowHandle) {
-                            if (callback) callback(documentId, data, windowHandle);
-                        },
-                        "onPostPublish": function () {
-                            if (onPostPublish) onPostPublish();
-                        },
-                        "onAfterPublish": function () {
-                            if (onAfterPublish) onAfterPublish();
-                        }
+                        // "onStarted": function (documentId, data, windowHandle) {
+                        //     if (callback) callback(documentId, data, windowHandle);
+                        // },
+                        // "onPostPublish": function () {
+                        //     if (onPostPublish) onPostPublish();
+                        // },
+                        // "onAfterPublish": function () {
+                        //     if (onAfterPublish) onAfterPublish();
+                        // }
                     });
                     starter.load();
                 })

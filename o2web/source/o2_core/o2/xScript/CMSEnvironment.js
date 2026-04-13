@@ -2144,12 +2144,12 @@ MWF.xScript.CMSEnvironment = function(ev){
                     "onStarted": function (documentId, data, windowHandle) {
                         if (callback) callback(documentId, data, windowHandle);
                     },
-                    "onPostPublish": function () {
-                        if(onPostPublish)onPostPublish();
-                    },
-                    "onAfterPublish": function () {
-                        if(onAfterPublish)onAfterPublish();
-                    }
+                    // "onPostPublish": function () {
+                    //     if(onPostPublish)onPostPublish();
+                    // },
+                    // "onAfterPublish": function () {
+                    //     if(onAfterPublish)onAfterPublish();
+                    // }
                 });
                 starter.load();
             })
