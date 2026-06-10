@@ -178,3 +178,12 @@ typings/
 *.lock
 *.checkstyle
 o2server/test.sh
+venv/
+0413bak_extracted_json
+*.py
+*.xapp
+业务需求.txt
+build_tables_manual.js
+build_tables.js
+projectSchoolEntrust.json
+studentInfo.json
