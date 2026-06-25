@@ -152,8 +152,20 @@
         return [];
     }
 
-    function dataStatus(row) {
+    function dataStatus(row, table) {
         var action = row.sync_action_type || "";
+        if (action.indexOf("删除") > -1) return "删除";
+        if (table && table.name === "学员基本信息") {
+            if (action.indexOf("-新增") > -1) return "新增";
+            if (action.indexOf("-修改") > -1) return "修改";
+            if (action.indexOf("-删除") > -1) return "删除";
+            if (action.indexOf("发证申请") > -1) return "发证申请";
+            if (action.indexOf("证书信息变更") > -1) return "证书信息变更";
+            if (action.indexOf("CMS修改保存") > -1 || action.indexOf("修改保存") > -1) return "修改";
+            if (action.indexOf("CMS提交") > -1 || action.indexOf("提交") > -1) return "新建";
+            if (action.indexOf("CMS学员信息提交/保存") > -1 || action.indexOf("保存") > -1) return "修改";
+            return action || "修改";
+        }
         if (action.indexOf("变更") > -1) return "变更";
         if (action.indexOf("结项") > -1) return "结项";
         if (action.indexOf("中止") > -1) return "中止";
@@ -212,7 +224,7 @@
             var remoteName = chooseRemoteName(def, remoteNameMap);
             if (!remoteName) continue;
 
-            var raw = def.name === "sync_status" ? dataStatus(row) : row[def.name];
+            var raw = def.name === "sync_status" ? dataStatus(row, table) : row[def.name];
             used[def.name] = true;
             var value = convertValue(raw, def.type, row);
             if (value === null || value === undefined) continue;

@@ -73,20 +73,20 @@ public class MetaModelBuilder {
 
 	}
 
-	private static List<File> classpath(File outputdir) {
+	private static List<File> classpath(File outputdir) throws Exception {
 
 		List<File> cp = new ArrayList<>();
 
 		cp.add(outputdir);
 		// 需要引入x_base_core_project才可以进行编译,在x_base_core_project模块中直接使用target/classes
-		cp.add(new File(Config.class.getProtectionDomain().getCodeSource().getLocation().getFile()));
+		cp.add(new File(Config.class.getProtectionDomain().getCodeSource().getLocation().toURI()));
 
 		ClassLoader cl = MetaModelBuilder.class.getClassLoader();
 
 		URL[] urls = ((URLClassLoader) cl).getURLs();
 
 		for (URL url : urls) {
-			cp.add(new File(url.getFile()));
+			cp.add(new File(url.toURI()));
 		}
 		return cp;
 	}

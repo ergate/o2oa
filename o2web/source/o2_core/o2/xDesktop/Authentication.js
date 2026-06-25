@@ -111,8 +111,8 @@ MWF.xDesktop.Authentication = new Class({
             }
             if (layout.session && layout.session.user) layout.session.user.token = "";
             if (sessionStorage) sessionStorage.removeItem("o2LayoutSessionToken");
-            window.location.href = "https://sso.nankai.edu.cn/sso/logout?service=https://fxloauth.nankai.edu.cn/sso/request";
-            debugger;
+            // window.location.href = "https://sso.nankai.edu.cn/sso/logout?service=https://fxloauth.nankai.edu.cn/sso/request";
+            // debugger;
             window.location.reload();
         }.bind(this));
     },
@@ -127,8 +127,8 @@ MWF.xDesktop.Authentication = new Class({
             if( callback ){
                 callback();
             }else{
-                window.location.href = "https://sso.nankai.edu.cn/sso/logout?service=https://fxloauth.nankai.edu.cn/sso/request";
-                debugger;
+                // window.location.href = "https://sso.nankai.edu.cn/sso/logout?service=https://fxloauth.nankai.edu.cn/sso/request";
+                // debugger;
                 window.location.reload();
             }
         }.bind(this));
