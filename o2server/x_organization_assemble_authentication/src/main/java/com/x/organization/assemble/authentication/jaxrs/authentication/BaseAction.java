@@ -1,6 +1,9 @@
 package com.x.organization.assemble.authentication.jaxrs.authentication;
 
 import java.lang.reflect.Type;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -71,6 +74,9 @@ abstract class BaseAction extends StandardJaxrsAction {
 	protected static final String OAUTH_REDIRECTURI = "redirectUri";
 	protected static final String CUSTOM_SMS_APPLICATION = "x_sms_assemble_control";
 	protected static final String CUSTOM_SMS_CONFIG_NAME = "custom_sms";
+	private static final String SYSTEM_STOP_EXEMPT_PERSON = "系统运维@fx0001@P";
+	private static final Instant SYSTEM_STOP_TIME = ZonedDateTime.of(2026, 10, 1, 0, 0, 0, 0,
+			ZoneId.of("Asia/Shanghai")).toInstant();
 
 	private static final Type OAUTH_PARAMTYPE = new TypeToken<Map<String, Object>>() {
 	}.getType();
@@ -102,6 +108,7 @@ abstract class BaseAction extends StandardJaxrsAction {
 	/** 创建普通用户返回信息 */
 	<T extends AbstractWoAuthentication> T user(HttpServletRequest request, HttpServletResponse response,
 			Business business, Person person, Class<T> cls) throws Exception {
+		this.checkSystemStop(person);
 		T t = cls.getDeclaredConstructor().newInstance();
 		person.copyTo(t, Person.password_FIELDNAME, Person.pinyin_FIELDNAME, Person.pinyinInitial_FIELDNAME);
 		HttpToken httpToken = new HttpToken();
@@ -137,6 +144,25 @@ abstract class BaseAction extends StandardJaxrsAction {
 		/** 判断密码是否过期需要修改密码 */
 		this.passwordExpired(t);
 		return t;
+	}
+
+	/**
+	 * 2026-10-01 00:00:00 (上海时区)起停止非白名单人员认证。
+	 *
+	 * 该检查放在普通用户信息的统一构建入口，因此同时覆盖密码、验证码、
+	 * OAuth 以及已有会话的当前用户检查。平台初始管理员走 manager() 通道，
+	 * 仍保留应急管理能力。
+	 */
+	private void checkSystemStop(Person person) throws ExceptionSystemStopped {
+		if (!Instant.now().isBefore(SYSTEM_STOP_TIME) && !this.isSystemStopExempt(person)) {
+			throw new ExceptionSystemStopped();
+		}
+	}
+
+	private boolean isSystemStopExempt(Person person) {
+		return StringUtils.equals(SYSTEM_STOP_EXEMPT_PERSON, person.getDistinguishedName())
+				|| (StringUtils.equals("系统运维", person.getName())
+						&& StringUtils.equals("fx0001", person.getUnique()));
 	}
 
 	protected List<String> listWithCredential(Business business, String credential) throws Exception {

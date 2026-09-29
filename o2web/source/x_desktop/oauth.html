@@ -14,6 +14,7 @@
     <script src="../o2_core/o2.min.js"></script>
     <script src="../o2_lib/Decimal.js"></script>
     <script src="js/base_simple_anonymous.js"></script>
+    <script src="js/system-stop-gate.js?v=2026093002"></script>
     <script>
 
         layout.addReady(function(){
@@ -29,6 +30,26 @@
                 var code = uri.getData("code");
                 var method = uri.getData("method");
                 var state = uri.getData("state");
+                var deployVersion = "2026093002";
+
+                var withDeployVersion = function (target) {
+                    target = target || "../";
+                    if (/(?:\?|&)deploy=[^&#]*/.test(target)) {
+                        return target.replace(/([?&])deploy=[^&#]*/, "$1deploy=" + deployVersion);
+                    }
+                    var hashIndex = target.indexOf("#");
+                    var hash = "";
+                    if (hashIndex !== -1) {
+                        hash = target.substring(hashIndex);
+                        target = target.substring(0, hashIndex);
+                    }
+                    return target + (target.indexOf("?") === -1 ? "?" : "&")
+                        + "deploy=" + deployVersion + hash;
+                };
+
+                var enterSystem = function () {
+                    window.location.replace(withDeployVersion(redirect || "../"));
+                };
 
                 var _load = function(){
                     if (code) {
@@ -51,37 +72,35 @@
                     var action = MWF.Actions.get("x_organization_assemble_authentication");
                     //企业微信单点登录
                     if (layout.isQywx()) {
-                        action["loginOauthQywxServer"](code, function () {
-                            if (redirect) {
-                                window.location = redirect;
-                            } else {
-                                window.location = "../";
-                            }
+                        action["loginOauthQywxServer"](code, function (json) {
+                            O2SystemStopGate.afterLogin(json && json.data, function () {
+                                enterSystem();
+                            });
                         }.bind(this));
                     } else if (layout.isDingding()) {
-                        action["loginOauthDingdingServer"](code, function () {
-                            if (redirect) {
-                                window.location = redirect;
-                            } else {
-                                window.location = "../";
-                            }
+                        action["loginOauthDingdingServer"](code, function (json) {
+                            O2SystemStopGate.afterLogin(json && json.data, function () {
+                                enterSystem();
+                            });
                         }.bind(this));
                     } else {
                         if(method) r = r + "&method=" + method;
                         var logMethod = method || "loginOauthServer";
-                        action[logMethod](oauth, code, encodeURIComponent(r), function () {
+                        action[logMethod](oauth, code, encodeURIComponent(r), function (json) {
                             if (method === "oauthBind") {
                                 alert("用户绑定已成功！");
                                 window.close();
                             } else {
-                                if (redirect) {
-                                    window.location = redirect;
-                                } else {
-                                    window.location = "../";
-                                }
+                                O2SystemStopGate.afterLogin(json && json.data, function () {
+                                    enterSystem();
+                                });
                             }
 
                         }.bind(this), function(){
+                            if (O2SystemStopGate.isStopped()) {
+                                O2SystemStopGate.showNotice();
+                                return;
+                            }
                             document.write("<div style='text-align: center; font-size: 24px; margin: 40px auto;'>无法获取用户凭证, 您可能未绑定“"+oauth+"”账号。</div>");
                             document.write("<div style='text-align: center; font-size: 18px; margin: 40px auto;'>请<a href='../x_desktop/redirect.html?url="+encodeURIComponent("../x_desktop/oauth.html?oauth="+oauth+"&redirect=/&method=oauthBind")+"'>点击此处登陆</a>后，重新扫码绑定账号。</div>")
                         });
