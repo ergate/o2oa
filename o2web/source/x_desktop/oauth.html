@@ -53,12 +53,8 @@
 
                 var _load = function(){
                     if (code) {
-                        // Some OAuth providers use the literal value "STATE" as a
-                        // placeholder. It is not a real relay state and must continue
-                        // through O2OA's local OAuth login (for example print.html).
-                        if(state && state !== "STATE"){
-                            window.location.href ="https://fxloauth.nankai.edu.cn/sso/code?code="
-                                + encodeURIComponent(code) + "&state=" + encodeURIComponent(state);
+                        if(state){
+                            window.location.href ="https://fxloauth.nankai.edu.cn/sso/code?code="+code+"&state="+state;
                         }else {
                             layout.loginOauth();
                         }
